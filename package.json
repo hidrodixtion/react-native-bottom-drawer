@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/rationalappdev/react-native-bottom-drawer.git"
+    "url": "git+ssh://git@github.com/hidrodixtion/react-native-bottom-drawer.git"
   },
   "bugs": {
     "url": "https://github.com/rationalappdev/react-native-bottom-drawer/issues"
