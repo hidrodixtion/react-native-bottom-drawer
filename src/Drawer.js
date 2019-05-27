@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   Animated,
   Dimensions,
@@ -11,6 +11,8 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native';
+import { Thumbnail } from 'native-base';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // Get screen dimensions
@@ -36,8 +38,8 @@ export default class Drawer extends Component {
   static defaultProps = {
     isOpen: false,
     header: 'Messages',
-    headerHeight: 70,
-    teaserHeight: 75,
+    headerHeight: 90,
+    teaserHeight: 175,
   };
 
   // Define state
@@ -166,7 +168,7 @@ export default class Drawer extends Component {
             <View style={[styles.header, this.getHeaderStyle()]}>
               {/* Icon */}
               <View style={styles.headerIcon}>
-                <Icon name="md-arrow-up" size={24} color="white" />
+                <Icon name="md-arrow-down" size={24} color="white" />
               </View>
               {/* Header */}
               <View style={styles.headerTitle}>
@@ -201,7 +203,15 @@ export default class Drawer extends Component {
             onScroll={this._handleScroll}
           >
             {/* Render children components */}
-            {children}
+              {
+                this.state.open?
+                    children
+                    :
+                    <View style={{paddingTop:10}}>
+                      <Thumbnail style={{height:10,width:10, alignSelf:'center'}} source={require('./up.png')}/>
+                      <Text style={{textAlign:'center', color:'#FFF', fontFamily:'Avenir'}}>ANNOUNCEMENT</Text>
+                    </View>
+              }
           </ScrollView>
         </Animated.View>
       </Animated.View>
@@ -346,7 +356,7 @@ export default class Drawer extends Component {
   getContainerStyle = () => ({
     // Move the view below others if not open or moving
     // to not block gesture handlers on other views
-    zIndex: this.state.pulling || this.state.open ? 1 : -1,
+    zIndex: this.state.pulling || this.state.open ? 99 : -1,
   });
 }
 
@@ -357,18 +367,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',               // center children
     justifyContent: 'flex-end',         // align popup at the bottom
     backgroundColor: 'transparent',     // transparent background
+      marginTop:70,
+      zIndex:-1
   },
   // Semi-transparent background below popup
   backdrop: {
     ...StyleSheet.absoluteFillObject,   // fill up all screen
     alignItems: 'center',               // center children
     justifyContent: 'flex-start',       // align popup at the bottom
-    backgroundColor: 'black',
+    backgroundColor: '#5f5f5f',
   },
   // Body
   content: {
-    backgroundColor: 'black',
-    height: height,
+    backgroundColor: '#5f5f5f',
+    height: height-50,
   },
   // Header
   header: {
@@ -376,6 +388,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',               // center vertically
     paddingTop: 20,
     paddingHorizontal: 20,
+      backgroundColor:'#5f5f5f'
   },
   headerIcon: {
     marginRight: 10,
